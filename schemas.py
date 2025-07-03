@@ -21,7 +21,7 @@ class HistOut(HistBase):
     idhist: int
     dt_inclusao: datetime
     dt_edicao: datetime
-    dt_alteracao: datetime
+    dt_exclusao: datetime
 
     model_config = {
         "from_attributes": True
@@ -44,7 +44,7 @@ class UserOut(UserBase):
     idusuario: int
     dt_inclusao: datetime
     dt_edicao: datetime
-    dt_alteracao: datetime
+    dt_exclusao: datetime
 
     model_config = {
         "from_attributes": True
@@ -67,7 +67,7 @@ class TaskOut(TaskBase):
     idtarefa: int
     dt_inclusao: datetime
     dt_edicao: Optional[datetime] = None
-    dt_alteracao: Optional[datetime] = None
+    dt_exclusao: Optional[datetime] = None
 
     model_config = {
         "from_attributes": True
