@@ -71,9 +71,6 @@ def Deletar(tabela, id):
 
     if response.status_code == 204:
         print(f"{tabela} deletada com sucesso!")
-    elif response.status_code == 200:
-        print(f"{tabela} deletada (com retorno)!")
-        print(response.text)
     else:
         print(f"Erro ao deletar: {response.status_code}")
         print("Detalhes:", response.text)
