@@ -20,8 +20,8 @@ class HistUpdate(BaseModel):
 class HistOut(HistBase):
     idhist: int
     dt_inclusao: datetime
-    dt_edicao: datetime
-    dt_exclusao: datetime
+    dt_edicao: Optional[datetime] = None
+    dt_exclusao: Optional[datetime] = None
 
     model_config = {
         "from_attributes": True
@@ -43,8 +43,8 @@ class UserUpdate(BaseModel):
 class UserOut(UserBase):
     idusuario: int
     dt_inclusao: datetime
-    dt_edicao: datetime
-    dt_exclusao: datetime
+    dt_edicao: Optional[datetime] = None
+    dt_exclusao: Optional[datetime] = None
 
     model_config = {
         "from_attributes": True

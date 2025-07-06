@@ -48,6 +48,17 @@ Foram definidos esquemas (`schemas`) com `Pydantic` para validação de entrada 
 * Utilização de `status code` apropriados (ex: `201 Created`, `204 No Content`, `404 Not Found`, `400 Bad Request`)
 * Handler global para erros de validação com `@app.exception_handler(RequestValidationError)`
 
+### 🧾 Registro de Logs
+A fim de gravar e validar o comportamento da API, foi implementado um sistema de logs por meio da logging, com os seguintes niveis:
+
+| 🔍 **Nível** | ✨ **Função**                                                                 |
+|--------------|-------------------------------------------------------------------------------|
+| `DEBUG`      | Informações detalhadas para desenvolvedores                                  |
+| `INFO`       | Ações bem-sucedidas                                                          |
+| `WARNING`    | Algo inesperado, mas que não quebra a API                                     |
+| `ERROR`      | Falhas que impedem alguma operação                                            |
+| `CRITICAL`   | Erros graves que comprometem a aplicação como um todo                         |
+
 ### ✍️ Contribuição
 
 Esse projeto é colaborativo entre membros do grupo, e está em constante evolução. Futuras etapas devem incluir:

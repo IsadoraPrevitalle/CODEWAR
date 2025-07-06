@@ -78,28 +78,39 @@ def Deletar(tabela, id):
 if __name__ == "__main__":
     response = requests.get(url)
     print(json.dumps(response.json(), indent= 4, ensure_ascii=False))
-    menu = int(input('''Para iniciarmos escolha uma das opções do menu: 
+    menu = ('''\n\n------------------ MENU PRINCIPAL-------------: 
                  \n 🟢 1 - Realizar uma busca 
                  \n 🟢 2 - Realizar um novo cadastro 
                  \n 🟢 3 - Realizar uma alteração
-                 \n 🟢 4 - Realizar uma exclusão \n'''))
-    tabela = input('Qual o nome da tabela que deseja realizar essa ação? ')
-    if menu == 1:
-        tipo = input('Entre com o tipo de retorno que deseja da API (XML ou JSON) ')
-        id = input('Entre com o ID da tabela caso deseje fazer uma busca especifica ')
-        
-        Buscar(tabela, tipo, id)
+                 \n 🟢 4 - Realizar uma exclusão 
+                 \n 🟢 5 - Sair \n''')
+    while True:
+        print(menu)
+        valor = int(input('Para inicializarmos escolha uma das opções do menu: '))
+        if valor == 5:
+            print('Programa finalizado')
+            break
+        else:
+            tabela = input('Qual o nome da tabela que deseja realizar essa ação? ')
+            if valor == 1:
+                tipo = input('Entre com o tipo de retorno que deseja da API (XML ou JSON) ')
+                id = input('Entre com o ID da tabela caso deseje fazer uma busca especifica ')
+                
+                Buscar(tabela, tipo, id)
 
-    elif menu == 2:
-        Criar(tabela)
+            elif valor == 2:
+                Criar(tabela)
 
-    elif menu == 3:
-        colunas = input('Forneça os nomes das colunas que deseja alterar o valor, separadas por vírgula: ')
-        id = input('Entre com o ID da tabela ')
-        colunas = [col.strip() for col in colunas.split(",")]
-        
-        Atualizar(tabela, id, colunas)
+            elif valor == 3:
+                colunas = input('Forneça os nomes das colunas que deseja alterar o valor, separadas por vírgula: ')
+                id = input('Entre com o ID da tabela ')
+                colunas = [col.strip() for col in colunas.split(",")]
+                
+                Atualizar(tabela, id, colunas)
 
-    elif menu == 4:
-        id = input('Entre com o ID da tabela ')
-        Deletar(tabela, id)
+            elif valor == 4:
+                id = input('Entre com o ID da tabela ')
+                Deletar(tabela, id)
+            
+            else: 
+                print('desculpe, não temos essa opção em nossa menu, tente novamente')
