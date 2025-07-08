@@ -707,3 +707,13 @@
 2025-07-06 15:37:51,427 - DEBUG - Deletando histórico 1
 2025-07-06 15:37:51,448 - INFO - Histórico 1 foi marcado como deletado
 2025-07-06 15:37:51,449 - INFO - A sessão com o banco de dados foi finalizada com sucesso
+2025-07-07 20:45:27,327 - INFO - Iniciando consulta de histórico para usuários com tarefas finalizadas.
+2025-07-07 20:45:27,348 - INFO - Usuário: 2 | Pontos: 5 | idHistórico: 2
+2025-07-07 20:45:27,349 - INFO - Iniciando extração da API - pontuação: 5
+2025-07-07 20:45:27,358 - DEBUG - Starting new HTTPS connection (1): pokeapi.co:443
+2025-07-07 20:45:27,777 - DEBUG - https://pokeapi.co:443 "GET /api/v2/pokemon/5 HTTP/1.1" 200 6749
+2025-07-07 20:45:27,786 - INFO - Buscando dados de espécie: https://pokeapi.co/api/v2/pokemon-species/5/
+2025-07-07 20:45:27,788 - DEBUG - Starting new HTTPS connection (1): pokeapi.co:443
+2025-07-07 20:45:28,181 - DEBUG - https://pokeapi.co:443 "GET /api/v2/pokemon-species/5/ HTTP/1.1" 200 5769
+2025-07-07 20:45:28,185 - INFO - Transform_API concluída para: charmeleon
+2025-07-07 20:45:28,185 - INFO - Pokémon selecionado: charmeleon, Descrição: \u5982\u679c\u5b83\u5728\u6218\u6597\u4e2d\u4ea2\u594b\u8d77\u6765\uff0c \u5c31\u4f1a\u55b7\u51fa\u707c\u70ed\u7684\u706b\u7130\uff0c \u628a\u5468\u56f4\u7684\u4e1c\u897f\u70e7\u5f97\u4e00\u5e72\u4e8c\u51c0\u3002, Imagem: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/5.png

@@ -6,11 +6,13 @@ from fastapi.encoders import jsonable_encoder
 import schemas
 from database import SessionLocal, engine, Base
 from config_log import logger
-from models import Usuario, Tarefa, Historico
+from models import Usuario, Tarefa, Historico, Recompensa
 from sqlalchemy.orm import Session
 from dicttoxml import dicttoxml
 from typing import Optional
 from datetime import datetime
+import requests
+from sqlalchemy import func
 
 Base.metadata.create_all(bind=engine)
 
@@ -140,6 +142,7 @@ def criar_usuario(usuario: schemas.UserCreate, db: Session = Depends(get_db)):
         db.refresh(novo_usuario)
         logger.info(f"Usuário {novo_usuario.idusuario} foi criado com sucesso")
         return novo_usuario
+        
     except Exception as e:
         logger.error(f"Erro ao criar usuário: {str(e)}")
         raise HTTPException(status_code=400, detail=f"Erro ao cadastrar usuário: {str(e)}")
@@ -212,7 +215,25 @@ def criar_historico(historico: schemas.HistCreate, db: Session = Depends(get_db)
         db.commit()
         db.refresh(novo_historico)
         logger.info(f"Histórico {novo_historico.idhist} foi criado com sucesso")
+    
+        if novo_historico.finalizada == 1:
+            result = (
+            db.query(
+                Historico.idusuario,
+                func.sum(Tarefa.pontos).label("total_pontos"),
+                func.max(Historico.idhist).label("max_idhist"),
+            )
+                .join(Tarefa, Historico.idtarefa == Tarefa.idtarefa)
+                .join(Usuario, novo_historico.idusuario == Usuario.idusuario) 
+                .filter(Historico.finalizada == True, Historico.dt_exclusao == None, Tarefa.dt_exclusao == None)
+                .group_by(Historico.idusuario)
+                .all()
+            )
+
+            criar_recom(result=result, db=db, idhist=novo_historico.idhist)
+
         return novo_historico
+
     except Exception as e:
         logger.error(f"Erro ao criar histórico: {str(e)}")
         raise HTTPException(status_code=400, detail=f"Erro ao cadastrar histórico: {str(e)}")
@@ -271,3 +292,80 @@ def atualizar_historico(id: int, historico_update: schemas.HistUpdate = Body(...
     hist_dict = jsonable_encoder(hist_out)
     logger.info(f"Histórico {id} atualizado com sucesso")
     return format_response(hist_dict, request)    
+
+#-------------------------------------------------------------- API ------------------------------------------------------
+
+def Extract_API(pontuacao):
+    logger.info(f"Iniciando extração da API - pontuação: {pontuacao}")
+    url = f"https://pokeapi.co/api/v2/pokemon/{pontuacao}"
+
+    info = requests.get(url)
+    if info.status_code != 200:
+        logger.error(f"Erro ao acessar URL: {info.status_code}")
+        return None, None
+    informacao = info.json()
+    
+    species_url = informacao['species']['url']
+    logger.info(f"Buscando dados de espécie: {species_url}")
+    
+    species = requests.get(species_url)
+    if species.status_code != 200:
+        logger.error(f"Erro ao buscar espécie: {species.status_code}")
+        return informacao, None
+
+    return informacao, species.json()
+
+
+def Transform_API(info, esp):
+    if not info or not esp:
+        logger.warning("info ou esp estão nulos.")
+        return None, None, None
+
+    nome = info['name']
+    foto = info['sprites']['front_default']
+
+    for entry in esp['flavor_text_entries']:
+        descricao = entry['flavor_text'].replace('\n', ' ').replace('\f', ' ')
+
+    logger.info(f"Transform_API concluída para: {nome}")
+    return nome, foto, descricao
+
+# criar uma recompensa 
+def criar_recompensa_automaticamente(result, db: Session, idhist: int):
+    logger.debug(f"Criando recompensa para hist: {idhist}, usuário: {result.idusuario}")
+
+    total_pontos = result.total_pontos or 0
+    if total_pontos == 0:
+        logger.warning(f"Usuário {result.idusuario} não possui pontos, não terá recompensa.")
+        return None
+
+    info, esp = Extract_API(total_pontos)
+    if not info or not esp:
+        logger.error("Falha ao buscar dados da API")
+        return None
+
+    nome, foto, descricao = Transform_API(info, esp)
+
+    nova_recompensa = Recompensa(
+        idhist=idhist,
+        nome=nome,
+        descricao=descricao,
+        imagem_url=foto,
+        pontos=total_pontos
+    )
+
+    db.add(nova_recompensa)
+    db.commit()
+    db.refresh(nova_recompensa)
+    logger.info(f"Recompensa criada para histórico {idhist}")
+    return nova_recompensa
+
+# GET - Buscar recompensa por histórico
+@app.get("/recom/", status_code=status.HTTP_200_OK)
+def buscar_recompensa(idhist: Optional[int] = None, db: Session = Depends(get_db)):
+    logger.info(f"Buscando recompensa para histórico {idhist}")
+    query = db.query(Recompensa).filter(Recompensa.dt_exclusao == None)
+    if idhist:
+        query = query.filter(Recompensa.idhist == idhist)
+    recompensas = query.all()
+    return [schemas.RecomOut.from_orm(r) for r in recompensas]

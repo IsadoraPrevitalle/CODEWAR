@@ -72,3 +72,20 @@ class TaskOut(TaskBase):
     model_config = {
         "from_attributes": True
         }
+    
+class RecomBase(BaseModel):
+    idhist: int
+    nome: str
+    descricao: str
+    imagem_url: str
+    pontos: int
+
+class RecomOut(RecomBase):
+    idrecom: int
+    dt_inclusao: datetime
+    dt_edicao: Optional[datetime] = None
+    dt_exclusao: Optional[datetime] = None
+    
+    model_config = {
+        "from_attributes": True
+        }
