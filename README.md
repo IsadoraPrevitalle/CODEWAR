@@ -34,6 +34,18 @@ A aplicação utiliza **SQLAlchemy** para fazer a ponte com o banco de dados rel
 * `Tarefa` – Título, descrição, pontos, datas de inclusão, edição e alteração
 * `Usuario` – Nome, idade, sexo, datas de inclusão, edição e alteração
 * `Historico` – Nome da tarefa, usuário responsável, finalização, datas
+* `Recompensa` – Nome do pokemon, descrição, imagem, pontos
+
+---
+
+### 🎁 Sistema de Recompensas com API Pública (Pokémon)
+
+A API conta com uma funcionalidade exclusiva de recompensa por desempenho, onde seu funcionamento verifica quando um histórico de tarefa é finalizado.
+Sempre que o histórico for concluído é realizado uma soma dos pontos de todas as tarefas finalizadas por aquele usuário e realizada uma requisição à PokéAPI (API pública de Pokémon), que retorna um Pokémon como recompensa, cotendo:
+* `Nome`
+* `Descrição`
+* `Imagem`
+* `Pontuação acumulada`
 
 ---
 
