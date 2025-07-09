@@ -7435,3 +7435,32 @@
 2025-07-09 11:52:56,580 - INFO - Inside key_is_valid_xml(). Testing "dt_exclusao"
 2025-07-09 11:52:56,581 - INFO - Inside make_attstring(). attr = "{}"
 2025-07-09 11:52:56,581 - INFO - A sessão com o banco de dados foi finalizada com sucesso
+2025-07-09 11:55:09,743 - INFO - A sessão com o banco de dados foi inicializada com suceso
+2025-07-09 11:55:09,750 - DEBUG - Atualizando histórico 2 com novos dados: {'descricao': 'Finalizou a leitura do livro Introduction to Algorithms', 'finalizada': True}
+2025-07-09 11:55:09,776 - DEBUG - Criando recompensa para hist: 2, usuário: 1
+2025-07-09 11:55:09,776 - INFO - Iniciando extração da API - pontuação: 14
+2025-07-09 11:55:09,779 - DEBUG - Starting new HTTPS connection (1): pokeapi.co:443
+2025-07-09 11:55:09,914 - DEBUG - https://pokeapi.co:443 "GET /api/v2/pokemon/14 HTTP/1.1" 200 1992
+2025-07-09 11:55:09,917 - INFO - Buscando dados de espécie: https://pokeapi.co/api/v2/pokemon-species/14/
+2025-07-09 11:55:09,920 - DEBUG - Starting new HTTPS connection (1): pokeapi.co:443
+2025-07-09 11:55:10,000 - DEBUG - https://pokeapi.co:443 "GET /api/v2/pokemon-species/14/ HTTP/1.1" 200 4542
+2025-07-09 11:55:10,002 - INFO - Transform_API concluída para: kakuna
+2025-07-09 11:55:10,018 - INFO - Recompensa criada para histórico 2
+2025-07-09 11:55:10,021 - INFO - Histórico 2 atualizado com sucesso
+2025-07-09 11:55:10,022 - INFO - A sessão com o banco de dados foi finalizada com sucesso
+2025-07-09 11:56:03,046 - INFO - A sessão com o banco de dados foi inicializada com suceso
+2025-07-09 11:56:03,046 - DEBUG - Deletando histórico 1
+2025-07-09 11:56:03,060 - INFO - Histórico 1 foi marcado como deletado
+2025-07-09 11:56:03,061 - INFO - A sessão com o banco de dados foi finalizada com sucesso
+2025-07-09 11:56:20,429 - INFO - A sessão com o banco de dados foi inicializada com suceso
+2025-07-09 11:56:20,430 - INFO - Realizando busca do histórico 1
+2025-07-09 11:56:20,434 - WARNING - Histórico 1 não foi encontrado
+2025-07-09 11:56:20,434 - INFO - A sessão com o banco de dados foi finalizada com sucesso
+2025-07-09 11:56:30,864 - INFO - A sessão com o banco de dados foi inicializada com suceso
+2025-07-09 11:56:30,864 - DEBUG - Realizando a busca de todos os históricos
+2025-07-09 11:56:30,870 - INFO - 12 históricos encontrados com sucesso
+2025-07-09 11:56:30,872 - INFO - A sessão com o banco de dados foi finalizada com sucesso
+2025-07-09 11:56:58,604 - INFO - A sessão com o banco de dados foi inicializada com suceso
+2025-07-09 11:56:58,605 - DEBUG - Realizando a busca de todas as recompensas
+2025-07-09 11:56:58,611 - INFO - 12 recompensas encontradas com sucesso
+2025-07-09 11:56:58,613 - INFO - A sessão com o banco de dados foi finalizada com sucesso
