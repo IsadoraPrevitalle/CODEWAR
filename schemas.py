@@ -82,9 +82,6 @@ class RecomBase(BaseModel):
 
 class RecomOut(RecomBase):
     idrecom: int
-    dt_inclusao: datetime
-    dt_edicao: Optional[datetime] = None
-    dt_exclusao: Optional[datetime] = None
     
     model_config = {
         "from_attributes": True

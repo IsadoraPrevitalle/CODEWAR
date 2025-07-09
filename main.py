@@ -209,6 +209,23 @@ def atualizar_usuario(id: int, usuario_update: schemas.UserUpdate = Body(...), d
 @app.post("/hist/", status_code=status.HTTP_201_CREATED)
 def criar_historico(historico: schemas.HistCreate, db: Session = Depends(get_db)):
     logger.debug(f"Dados para novo histórico foram recebidos com sucesso: {historico.dict()}")
+    
+    usuario = db.query(Usuario).filter(
+        Usuario.idusuario == historico.idusuario,
+        Usuario.dt_exclusao == None
+    ).first()
+    if not usuario:
+        logger.warning(f"Esse usuário não existe: {historico.idusuario}")
+        raise HTTPException(status_code=400, detail="Usuário não encontrado ou excluído")
+
+    tarefa = db.query(Tarefa).filter(
+        Tarefa.idtarefa == historico.idtarefa,
+        Tarefa.dt_exclusao == None
+    ).first()
+    if not tarefa:
+        logger.warning(f"Essa tarefa não existe: {historico.idtarefa}")
+        raise HTTPException(status_code=400, detail="Tarefa não encontrada ou excluída")
+
     try:
         novo_historico = Historico(**historico.dict())
         db.add(novo_historico)
@@ -223,17 +240,19 @@ def criar_historico(historico: schemas.HistCreate, db: Session = Depends(get_db)
                 func.sum(Tarefa.pontos).label("total_pontos"),
                 func.max(Historico.idhist).label("max_idhist"),
             )
-                .join(Tarefa, Historico.idtarefa == Tarefa.idtarefa)
-                .join(Usuario, novo_historico.idusuario == Usuario.idusuario) 
-                .filter(Historico.finalizada == True, Historico.dt_exclusao == None, Tarefa.dt_exclusao == None)
+                .join(Tarefa, Historico.idtarefa == Tarefa.idtarefa) 
+                .filter(Historico.finalizada == True, 
+                        Historico.dt_exclusao == None, 
+                        Tarefa.dt_exclusao == None,
+                        Historico.idusuario == novo_historico.idusuario
+                        )
                 .group_by(Historico.idusuario)
-                .all()
+                .first()
             )
-
+            
             criar_recom(result=result, db=db, idhist=novo_historico.idhist)
-
-        return novo_historico
-
+        return Historico(**historico.dict())
+    
     except Exception as e:
         logger.error(f"Erro ao criar histórico: {str(e)}")
         raise HTTPException(status_code=400, detail=f"Erro ao cadastrar histórico: {str(e)}")
@@ -280,6 +299,7 @@ def atualizar_historico(id: int, historico_update: schemas.HistUpdate = Body(...
         logger.warning(f"Histórico {id} não foi encontrado")
         return format_response({"mensage": "Histórico não pode ser editado"}, request, status_code=404)
     
+    finalizada = historico_db.finalizada
     update_hist = historico_update.dict(exclude_unset=True)
 
     for key, value in update_hist.items():
@@ -287,6 +307,25 @@ def atualizar_historico(id: int, historico_update: schemas.HistUpdate = Body(...
 
     db.commit()
     db.refresh(historico_db)
+
+    if not finalizada and historico_db.finalizada:
+        result = (
+        db.query(
+            Historico.idusuario,
+            func.sum(Tarefa.pontos).label("total_pontos"),
+            historico_db.idhist,
+        )
+            .join(Tarefa, Historico.idtarefa == Tarefa.idtarefa) 
+            .filter(Historico.finalizada == True, 
+                    Historico.dt_exclusao == None, 
+                    Tarefa.dt_exclusao == None,
+                    Historico.idusuario == historico_db.idusuario
+                    )
+            .group_by(Historico.idusuario)
+            .first()
+        )
+        
+        criar_recom(result=result, db=db, idhist=historico_db.idhist)
 
     hist_out = schemas.HistOut.from_orm(historico_db)
     hist_dict = jsonable_encoder(hist_out)
@@ -331,7 +370,7 @@ def Transform_API(info, esp):
     return nome, foto, descricao
 
 # criar uma recompensa 
-def criar_recompensa_automaticamente(result, db: Session, idhist: int):
+def criar_recom(result, db: Session, idhist: int):
     logger.debug(f"Criando recompensa para hist: {idhist}, usuário: {result.idusuario}")
 
     total_pontos = result.total_pontos or 0
@@ -360,12 +399,23 @@ def criar_recompensa_automaticamente(result, db: Session, idhist: int):
     logger.info(f"Recompensa criada para histórico {idhist}")
     return nova_recompensa
 
-# GET - Buscar recompensa por histórico
+# GET - Buscar recompensa
 @app.get("/recom/", status_code=status.HTTP_200_OK)
-def buscar_recompensa(idhist: Optional[int] = None, db: Session = Depends(get_db)):
-    logger.info(f"Buscando recompensa para histórico {idhist}")
-    query = db.query(Recompensa).filter(Recompensa.dt_exclusao == None)
-    if idhist:
-        query = query.filter(Recompensa.idhist == idhist)
-    recompensas = query.all()
-    return [schemas.RecomOut.from_orm(r) for r in recompensas]
+def buscar_recom(request: Request, id: Optional[int] = None, db: Session = Depends(get_db)):
+    if id is not None:
+        logger.info(f"Realizando busca na recompensa cujo id de histórico é {id}")
+        busca_recom = db.query(Recompensa).filter(Recompensa.idhist == id).first()
+        if not busca_recom:
+            logger.warning(f"Recompensa de histórico com id: {id} não foi encontrado")
+            return format_response({"mensage": "A recompensa desse histórico não pode ser encontrado"}, request, status_code=404)
+        logger.info(f"Recompensa do histórico {id} encontrada com sucesso")
+        recom_out = schemas.RecomOut.from_orm(busca_recom)
+        recom_dict = jsonable_encoder(recom_out)
+        return format_response(recom_dict, request)
+        
+    else:
+        logger.debug("Realizando a busca de todas as recompensas")
+        busca_recom = db.query(Recompensa).all()
+        recom_out = [jsonable_encoder(schemas.RecomOut.from_orm(r)) for r in busca_recom]
+        logger.info(f"{len(busca_recom)} recompensas encontradas com sucesso")
+        return format_response(recom_out, request)

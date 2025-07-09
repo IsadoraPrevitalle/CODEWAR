@@ -8,7 +8,7 @@ class Recompensa(Base):
     idhist = Column(Integer, ForeignKey("historico.idhist"), nullable=False)
     nome = Column(String(30), nullable=False)
     descricao = Column(String(100), nullable=False)
-    imagem_url = Column(String(300), nullable=True)
+    imagem_url = Column(String, nullable=True)
     pontos = Column(Integer, nullable=False)
 
 class Historico(Base):
