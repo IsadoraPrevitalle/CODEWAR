@@ -7464,3 +7464,168 @@
 2025-07-09 11:56:58,605 - DEBUG - Realizando a busca de todas as recompensas
 2025-07-09 11:56:58,611 - INFO - 12 recompensas encontradas com sucesso
 2025-07-09 11:56:58,613 - INFO - A sessão com o banco de dados foi finalizada com sucesso
+2025-07-09 19:39:55,363 - INFO - A sessão com o banco de dados foi inicializada com suceso
+2025-07-09 19:39:55,388 - DEBUG - Dados para novo histórico foram recebidos com sucesso: {'nome': 'leitura', 'descricao': 'inicializou leitura do livro entendendo algoritmos ', 'idusuario': 4, 'idtarefa': 8, 'finalizada': False}
+2025-07-09 19:39:55,434 - INFO - Histórico 14 foi criado com sucesso
+2025-07-09 19:39:55,435 - INFO - A sessão com o banco de dados foi finalizada com sucesso
+2025-07-09 19:41:53,263 - INFO - A sessão com o banco de dados foi inicializada com suceso
+2025-07-09 19:41:53,287 - DEBUG - Dados para novo histórico foram recebidos com sucesso: {'nome': 'ETL', 'descricao': 'Participou de um intensivo de ETL no trabalho', 'idusuario': 1, 'idtarefa': 7, 'finalizada': False}
+2025-07-09 19:41:53,307 - INFO - Histórico 15 foi criado com sucesso
+2025-07-09 19:41:53,308 - INFO - A sessão com o banco de dados foi finalizada com sucesso
+2025-07-10 19:12:07,979 - INFO - A sessão com o banco de dados foi inicializada com suceso
+2025-07-10 19:12:08,013 - DEBUG - Dados para novo histórico foram recebidos com sucesso: {'nome': 'AirFlow', 'descricao': 'finlizou o curso de nivel avançado da Udemy sobre airflow', 'idusuario': 1, 'idtarefa': 6, 'finalizada': True}
+2025-07-10 19:12:08,084 - INFO - Histórico 16 foi criado com sucesso
+2025-07-10 19:12:08,088 - ERROR - Erro ao criar histórico: Don't know how to join to <Mapper at 0x2bed4b70450; Tarefa>. Please use the .select_from() method to establish an explicit left side, as well as providing an explicit ON clause if not present already to help resolve the ambiguity.
+2025-07-10 19:12:08,089 - INFO - A sessão com o banco de dados foi finalizada com sucesso
+2025-07-10 19:21:27,670 - INFO - A sessão com o banco de dados foi inicializada com suceso
+2025-07-10 19:21:27,680 - DEBUG - Dados para novo histórico foram recebidos com sucesso: {'nome': 'AirFlow', 'descricao': 'finlizou o curso de nivel avançado da Udemy sobre airflow', 'idusuario': 1, 'idtarefa': 6, 'finalizada': True}
+2025-07-10 19:21:27,723 - INFO - Histórico 17 foi criado com sucesso
+2025-07-10 19:21:27,728 - ERROR - Erro ao criar histórico: Don't know how to join to <Mapper at 0x1dedf790310; Tarefa>. Please use the .select_from() method to establish an explicit left side, as well as providing an explicit ON clause if not present already to help resolve the ambiguity.
+2025-07-10 19:21:27,729 - INFO - A sessão com o banco de dados foi finalizada com sucesso
+2025-07-10 19:24:11,229 - INFO - A sessão com o banco de dados foi inicializada com suceso
+2025-07-10 19:24:11,240 - DEBUG - Dados para novo histórico foram recebidos com sucesso: {'nome': 'AirFlow', 'descricao': 'finlizou o curso de nivel avançado da Udemy sobre airflow', 'idusuario': 1, 'idtarefa': 6, 'finalizada': True}
+2025-07-10 19:24:11,278 - INFO - Histórico 18 foi criado com sucesso
+2025-07-10 19:24:11,284 - INFO - Realizando etapa de extração na recompensa de idhist <built-in function id>
+2025-07-10 19:24:11,284 - INFO - Iniciando extração da API - pontuação: 26
+2025-07-10 19:24:11,291 - DEBUG - Starting new HTTPS connection (1): pokeapi.co:443
+2025-07-10 19:24:11,448 - DEBUG - https://pokeapi.co:443 "GET /api/v2/pokemon/26 HTTP/1.1" 200 6501
+2025-07-10 19:24:11,455 - INFO - Buscando dados de espécie: https://pokeapi.co/api/v2/pokemon-species/26/
+2025-07-10 19:24:11,458 - DEBUG - Starting new HTTPS connection (1): pokeapi.co:443
+2025-07-10 19:24:11,553 - DEBUG - https://pokeapi.co:443 "GET /api/v2/pokemon-species/26/ HTTP/1.1" 200 9192
+2025-07-10 19:24:11,556 - INFO - Realizando etapa de transformação ne recompensa de idhist <built-in function id>
+2025-07-10 19:24:11,559 - INFO - Transform_API concluída para: Raichu
+2025-07-10 19:24:11,560 - INFO - Realizando etapa de carregamento na recompensa de idhist <built-in function id>
+2025-07-10 19:24:11,560 - ERROR - Erro ao criar histórico: 'Recompensa' object has no attribute 'idusuario'
+2025-07-10 19:24:11,561 - INFO - A sessão com o banco de dados foi finalizada com sucesso
+2025-07-10 19:25:22,483 - INFO - A sessão com o banco de dados foi inicializada com suceso
+2025-07-10 19:25:22,491 - DEBUG - Dados para novo histórico foram recebidos com sucesso: {'nome': 'AirFlow', 'descricao': 'finlizou o curso de nivel avançado da Udemy sobre airflow', 'idusuario': 1, 'idtarefa': 6, 'finalizada': True}
+2025-07-10 19:25:22,522 - INFO - Histórico 19 foi criado com sucesso
+2025-07-10 19:25:22,527 - INFO - Realizando etapa de extração na recompensa de idhist <built-in function id>
+2025-07-10 19:25:22,528 - INFO - Iniciando extração da API - pontuação: 30
+2025-07-10 19:25:22,532 - DEBUG - Starting new HTTPS connection (1): pokeapi.co:443
+2025-07-10 19:25:22,661 - DEBUG - https://pokeapi.co:443 "GET /api/v2/pokemon/30 HTTP/1.1" 200 5943
+2025-07-10 19:25:22,668 - INFO - Buscando dados de espécie: https://pokeapi.co/api/v2/pokemon-species/30/
+2025-07-10 19:25:22,671 - DEBUG - Starting new HTTPS connection (1): pokeapi.co:443
+2025-07-10 19:25:22,775 - DEBUG - https://pokeapi.co:443 "GET /api/v2/pokemon-species/30/ HTTP/1.1" 200 6103
+2025-07-10 19:25:22,778 - INFO - Realizando etapa de transformação ne recompensa de idhist <built-in function id>
+2025-07-10 19:25:22,779 - INFO - Transform_API concluída para: Nidorina
+2025-07-10 19:25:22,779 - INFO - Realizando etapa de carregamento na recompensa de idhist <built-in function id>
+2025-07-10 19:25:22,779 - DEBUG - Criando recompensa para hist: 19
+2025-07-10 19:25:22,779 - ERROR - Erro ao criar histórico: 'Recompensa' object has no attribute 'total_pontos'
+2025-07-10 19:25:22,781 - INFO - A sessão com o banco de dados foi finalizada com sucesso
+2025-07-10 19:26:08,637 - INFO - A sessão com o banco de dados foi inicializada com suceso
+2025-07-10 19:26:08,640 - DEBUG - Dados para novo histórico foram recebidos com sucesso: {'nome': 'teste', 'descricao': 'teste', 'idusuario': 1, 'idtarefa': 1, 'finalizada': True}
+2025-07-10 19:26:08,667 - INFO - Histórico 20 foi criado com sucesso
+2025-07-10 19:26:08,670 - INFO - Realizando etapa de extração na recompensa de idhist <built-in function id>
+2025-07-10 19:26:08,671 - INFO - Iniciando extração da API - pontuação: 40
+2025-07-10 19:26:08,675 - DEBUG - Starting new HTTPS connection (1): pokeapi.co:443
+2025-07-10 19:26:08,788 - DEBUG - https://pokeapi.co:443 "GET /api/v2/pokemon/40 HTTP/1.1" 200 7767
+2025-07-10 19:26:08,795 - INFO - Buscando dados de espécie: https://pokeapi.co/api/v2/pokemon-species/40/
+2025-07-10 19:26:08,796 - DEBUG - Starting new HTTPS connection (1): pokeapi.co:443
+2025-07-10 19:26:08,893 - DEBUG - https://pokeapi.co:443 "GET /api/v2/pokemon-species/40/ HTTP/1.1" 200 9527
+2025-07-10 19:26:08,897 - INFO - Realizando etapa de transformação ne recompensa de idhist <built-in function id>
+2025-07-10 19:26:08,897 - INFO - Transform_API concluída para: Wigglytuff
+2025-07-10 19:26:08,898 - INFO - Realizando etapa de carregamento na recompensa de idhist <built-in function id>
+2025-07-10 19:26:08,898 - DEBUG - Criando recompensa para hist: 20
+2025-07-10 19:26:08,901 - ERROR - Erro ao criar histórico: 'Recompensa' object has no attribute '_mapping'
+2025-07-10 19:26:08,902 - INFO - A sessão com o banco de dados foi finalizada com sucesso
+2025-07-10 19:28:20,624 - INFO - A sessão com o banco de dados foi inicializada com suceso
+2025-07-10 19:28:20,630 - DEBUG - Dados para novo histórico foram recebidos com sucesso: {'nome': 'teste', 'descricao': 'teste', 'idusuario': 1, 'idtarefa': 1, 'finalizada': True}
+2025-07-10 19:28:20,659 - INFO - Histórico 21 foi criado com sucesso
+2025-07-10 19:28:20,664 - INFO - Realizando etapa de extração na recompensa de idhist <built-in function id>
+2025-07-10 19:28:20,664 - INFO - Iniciando extração da API - pontuação: 50
+2025-07-10 19:28:20,669 - DEBUG - Starting new HTTPS connection (1): pokeapi.co:443
+2025-07-10 19:28:20,808 - DEBUG - https://pokeapi.co:443 "GET /api/v2/pokemon/50 HTTP/1.1" 200 6747
+2025-07-10 19:28:20,816 - INFO - Buscando dados de espécie: https://pokeapi.co/api/v2/pokemon-species/50/
+2025-07-10 19:28:20,818 - DEBUG - Starting new HTTPS connection (1): pokeapi.co:443
+2025-07-10 19:28:20,912 - DEBUG - https://pokeapi.co:443 "GET /api/v2/pokemon-species/50/ HTTP/1.1" 200 8893
+2025-07-10 19:28:20,915 - INFO - Realizando etapa de transformação ne recompensa de idhist <built-in function id>
+2025-07-10 19:28:20,916 - INFO - Transform_API concluída para: Diglett
+2025-07-10 19:28:20,916 - INFO - Realizando etapa de carregamento na recompensa de idhist <built-in function id>
+2025-07-10 19:28:20,917 - DEBUG - Criando recompensa para hist: 21
+2025-07-10 19:28:20,919 - ERROR - Erro ao criar histórico: '_sa_instance_state' is an invalid keyword argument for Recompensa
+2025-07-10 19:28:20,920 - INFO - A sessão com o banco de dados foi finalizada com sucesso
+2025-07-10 19:29:23,551 - INFO - A sessão com o banco de dados foi inicializada com suceso
+2025-07-10 19:29:23,558 - DEBUG - Dados para novo histórico foram recebidos com sucesso: {'nome': 'teste', 'descricao': 'teste', 'idusuario': 1, 'idtarefa': 1, 'finalizada': True}
+2025-07-10 19:29:23,591 - INFO - Histórico 22 foi criado com sucesso
+2025-07-10 19:29:23,597 - INFO - Realizando etapa de extração na recompensa de idhist <built-in function id>
+2025-07-10 19:29:23,597 - INFO - Iniciando extração da API - pontuação: 60
+2025-07-10 19:29:23,603 - DEBUG - Starting new HTTPS connection (1): pokeapi.co:443
+2025-07-10 19:29:23,740 - DEBUG - https://pokeapi.co:443 "GET /api/v2/pokemon/60 HTTP/1.1" 200 6357
+2025-07-10 19:29:23,751 - INFO - Buscando dados de espécie: https://pokeapi.co/api/v2/pokemon-species/60/
+2025-07-10 19:29:23,754 - DEBUG - Starting new HTTPS connection (1): pokeapi.co:443
+2025-07-10 19:29:23,851 - DEBUG - https://pokeapi.co:443 "GET /api/v2/pokemon-species/60/ HTTP/1.1" 200 8787
+2025-07-10 19:29:23,853 - INFO - Realizando etapa de transformação ne recompensa de idhist <built-in function id>
+2025-07-10 19:29:23,854 - INFO - Transform_API concluída para: Poliwag
+2025-07-10 19:29:23,854 - INFO - Realizando etapa de carregamento na recompensa de idhist <built-in function id>
+2025-07-10 19:29:23,854 - DEBUG - Criando recompensa para hist: 22
+2025-07-10 19:29:23,870 - INFO - Recompensa criada para histórico 22
+2025-07-10 19:29:23,872 - INFO - A sessão com o banco de dados foi finalizada com sucesso
+2025-07-10 20:02:51,344 - INFO - A sessão com o banco de dados foi inicializada com suceso
+2025-07-10 20:02:51,373 - DEBUG - Dados para novo histórico foram recebidos com sucesso: {'nome': 'Hackathon', 'descricao': 'Participou do evento de Hackathon em Tupã', 'idusuario': 3, 'idtarefa': 1, 'finalizada': True}
+2025-07-10 20:02:51,470 - INFO - Histórico 17 foi criado com sucesso
+2025-07-10 20:02:51,474 - INFO - Realizando etapa de extração na recompensa de idhist <built-in function id>
+2025-07-10 20:02:51,474 - INFO - Iniciando extração da API - pontuação: 21
+2025-07-10 20:02:51,487 - DEBUG - Starting new HTTPS connection (1): pokeapi.co:443
+2025-07-10 20:02:51,981 - DEBUG - https://pokeapi.co:443 "GET /api/v2/pokemon/21 HTTP/1.1" 200 5651
+2025-07-10 20:02:51,997 - INFO - Buscando dados de espécie: https://pokeapi.co/api/v2/pokemon-species/21/
+2025-07-10 20:02:51,999 - DEBUG - Starting new HTTPS connection (1): pokeapi.co:443
+2025-07-10 20:02:52,430 - DEBUG - https://pokeapi.co:443 "GET /api/v2/pokemon-species/21/ HTTP/1.1" 200 7175
+2025-07-10 20:02:52,438 - INFO - Realizando etapa de transformação ne recompensa de idhist <built-in function id>
+2025-07-10 20:02:52,440 - INFO - Transform_API concluída para: Spearow
+2025-07-10 20:02:52,440 - INFO - Realizando etapa de carregamento na recompensa de idhist <built-in function id>
+2025-07-10 20:02:52,440 - DEBUG - Criando recompensa para hist: 17
+2025-07-10 20:02:52,453 - INFO - Recompensa criada para histórico 17
+2025-07-10 20:02:52,456 - INFO - A sessão com o banco de dados foi finalizada com sucesso
+2025-07-10 20:03:37,065 - INFO - A sessão com o banco de dados foi inicializada com suceso
+2025-07-10 20:03:37,095 - DEBUG - Atualizando histórico 16 com novos dados: {'finalizada': True}
+2025-07-10 20:03:37,119 - INFO - Histórico 16 atualizado com sucesso
+2025-07-10 20:03:37,119 - INFO - A sessão com o banco de dados foi finalizada com sucesso
+2025-07-10 20:05:02,446 - INFO - A sessão com o banco de dados foi inicializada com suceso
+2025-07-10 20:05:02,446 - DEBUG - Dados para novo histórico foram recebidos com sucesso: {'nome': 'AirFlow', 'descricao': 'Finalizou curso avançado de airflow na Udemy', 'idusuario': 1, 'idtarefa': 6, 'finalizada': True}
+2025-07-10 20:05:02,465 - INFO - Histórico 18 foi criado com sucesso
+2025-07-10 20:05:02,467 - INFO - Realizando etapa de extração na recompensa de idhist <built-in function id>
+2025-07-10 20:05:02,467 - INFO - Iniciando extração da API - pontuação: 18
+2025-07-10 20:05:02,469 - DEBUG - Starting new HTTPS connection (1): pokeapi.co:443
+2025-07-10 20:05:02,895 - DEBUG - https://pokeapi.co:443 "GET /api/v2/pokemon/18 HTTP/1.1" 200 5681
+2025-07-10 20:05:02,899 - INFO - Buscando dados de espécie: https://pokeapi.co/api/v2/pokemon-species/18/
+2025-07-10 20:05:02,901 - DEBUG - Starting new HTTPS connection (1): pokeapi.co:443
+2025-07-10 20:05:03,318 - DEBUG - https://pokeapi.co:443 "GET /api/v2/pokemon-species/18/ HTTP/1.1" 200 4646
+2025-07-10 20:05:03,321 - INFO - Realizando etapa de transformação ne recompensa de idhist <built-in function id>
+2025-07-10 20:05:03,322 - INFO - Transform_API concluída para: Pidgeot
+2025-07-10 20:05:03,322 - INFO - Realizando etapa de carregamento na recompensa de idhist <built-in function id>
+2025-07-10 20:05:03,322 - DEBUG - Criando recompensa para hist: 18
+2025-07-10 20:05:03,334 - INFO - Recompensa criada para histórico 18
+2025-07-10 20:05:03,335 - INFO - A sessão com o banco de dados foi finalizada com sucesso
+2025-07-10 20:08:32,653 - INFO - A sessão com o banco de dados foi inicializada com suceso
+2025-07-10 20:08:32,656 - DEBUG - Dados para novo histórico foram recebidos com sucesso: {'nome': 'Leitura', 'descricao': 'Finalizou leitura do livro Tecnologi não é tudo', 'idusuario': 3, 'idtarefa': 8, 'finalizada': True}
+2025-07-10 20:08:32,683 - INFO - Histórico 19 foi criado com sucesso
+2025-07-10 20:08:32,685 - INFO - Realizando etapa de extração na recompensa de idhist <built-in function id>
+2025-07-10 20:08:32,685 - INFO - Iniciando extração da API - pontuação: 22
+2025-07-10 20:08:32,688 - DEBUG - Starting new HTTPS connection (1): pokeapi.co:443
+2025-07-10 20:08:33,175 - DEBUG - https://pokeapi.co:443 "GET /api/v2/pokemon/22 HTTP/1.1" 200 5763
+2025-07-10 20:08:33,184 - INFO - Buscando dados de espécie: https://pokeapi.co/api/v2/pokemon-species/22/
+2025-07-10 20:08:33,186 - DEBUG - Starting new HTTPS connection (1): pokeapi.co:443
+2025-07-10 20:08:33,636 - DEBUG - https://pokeapi.co:443 "GET /api/v2/pokemon-species/22/ HTTP/1.1" 200 7502
+2025-07-10 20:08:33,642 - INFO - Realizando etapa de transformação ne recompensa de idhist <built-in function id>
+2025-07-10 20:08:33,644 - INFO - Transform_API concluída para: Fearow
+2025-07-10 20:08:33,644 - INFO - Realizando etapa de carregamento na recompensa de idhist <built-in function id>
+2025-07-10 20:08:33,644 - DEBUG - Criando recompensa para hist: 19
+2025-07-10 20:08:33,749 - INFO - Recompensa criada para histórico 19
+2025-07-10 20:08:33,751 - INFO - A sessão com o banco de dados foi finalizada com sucesso
+2025-07-10 20:09:09,734 - INFO - A sessão com o banco de dados foi inicializada com suceso
+2025-07-10 20:09:09,735 - DEBUG - Dados para novo histórico foram recebidos com sucesso: {'nome': 'Leitura', 'descricao': 'Finalizou leitura do livro Tecnologi não é tudo', 'idusuario': 4, 'idtarefa': 8, 'finalizada': True}
+2025-07-10 20:09:09,753 - INFO - Histórico 20 foi criado com sucesso
+2025-07-10 20:09:09,755 - INFO - Realizando etapa de extração na recompensa de idhist <built-in function id>
+2025-07-10 20:09:09,755 - INFO - Iniciando extração da API - pontuação: 11
+2025-07-10 20:09:09,756 - DEBUG - Starting new HTTPS connection (1): pokeapi.co:443
+2025-07-10 20:09:10,192 - DEBUG - https://pokeapi.co:443 "GET /api/v2/pokemon/11 HTTP/1.1" 200 2025
+2025-07-10 20:09:10,194 - INFO - Buscando dados de espécie: https://pokeapi.co/api/v2/pokemon-species/11/
+2025-07-10 20:09:10,195 - DEBUG - Starting new HTTPS connection (1): pokeapi.co:443
+2025-07-10 20:09:11,634 - DEBUG - https://pokeapi.co:443 "GET /api/v2/pokemon-species/11/ HTTP/1.1" 200 8494
+2025-07-10 20:09:11,809 - INFO - Realizando etapa de transformação ne recompensa de idhist <built-in function id>
+2025-07-10 20:09:11,810 - INFO - Transform_API concluída para: Metapod
+2025-07-10 20:09:11,810 - INFO - Realizando etapa de carregamento na recompensa de idhist <built-in function id>
+2025-07-10 20:09:11,810 - DEBUG - Criando recompensa para hist: 20
+2025-07-10 20:09:11,822 - INFO - Recompensa criada para histórico 20
+2025-07-10 20:09:11,823 - INFO - A sessão com o banco de dados foi finalizada com sucesso

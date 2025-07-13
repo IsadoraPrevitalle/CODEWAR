@@ -7,6 +7,7 @@ import schemas
 from database import SessionLocal, engine, Base
 from config_log import logger
 from models import Usuario, Tarefa, Historico, Recompensa
+import ETL
 from sqlalchemy.orm import Session
 from dicttoxml import dicttoxml
 from typing import Optional
@@ -234,12 +235,11 @@ def criar_historico(historico: schemas.HistCreate, db: Session = Depends(get_db)
         logger.info(f"Histórico {novo_historico.idhist} foi criado com sucesso")
     
         if novo_historico.finalizada == 1:
-            result = (
+            pontos = (
             db.query(
-                Historico.idusuario,
-                func.sum(Tarefa.pontos).label("total_pontos"),
-                func.max(Historico.idhist).label("max_idhist"),
+                func.sum(Tarefa.pontos).label("total_pontos")
             )
+                .select_from(Historico)
                 .join(Tarefa, Historico.idtarefa == Tarefa.idtarefa) 
                 .filter(Historico.finalizada == True, 
                         Historico.dt_exclusao == None, 
@@ -247,10 +247,11 @@ def criar_historico(historico: schemas.HistCreate, db: Session = Depends(get_db)
                         Historico.idusuario == novo_historico.idusuario
                         )
                 .group_by(Historico.idusuario)
-                .first()
+                .scalar()
             )
-            
-            criar_recom(result=result, db=db, idhist=novo_historico.idhist)
+        
+        criar_recom(pontos=pontos, db=db, idhist=novo_historico.idhist)
+
         return Historico(**historico.dict())
     
     except Exception as e:
@@ -309,11 +310,9 @@ def atualizar_historico(id: int, historico_update: schemas.HistUpdate = Body(...
     db.refresh(historico_db)
 
     if not finalizada and historico_db.finalizada:
-        result = (
+        pontos = (
         db.query(
-            Historico.idusuario,
-            func.sum(Tarefa.pontos).label("total_pontos"),
-            historico_db.idhist,
+            func.sum(Tarefa.pontos).label("total_pontos")
         )
             .join(Tarefa, Historico.idtarefa == Tarefa.idtarefa) 
             .filter(Historico.finalizada == True, 
@@ -322,10 +321,10 @@ def atualizar_historico(id: int, historico_update: schemas.HistUpdate = Body(...
                     Historico.idusuario == historico_db.idusuario
                     )
             .group_by(Historico.idusuario)
-            .first()
+            .scalar()
         )
         
-        criar_recom(result=result, db=db, idhist=historico_db.idhist)
+        criar_recom(pontos=pontos, db=db, idhist=historico_db.idhist)
 
     hist_out = schemas.HistOut.from_orm(historico_db)
     hist_dict = jsonable_encoder(hist_out)
@@ -334,70 +333,21 @@ def atualizar_historico(id: int, historico_update: schemas.HistUpdate = Body(...
 
 #-------------------------------------------------------------- API ------------------------------------------------------
 
-def Extract_API(pontuacao):
-    logger.info(f"Iniciando extração da API - pontuação: {pontuacao}")
-    url = f"https://pokeapi.co/api/v2/pokemon/{pontuacao}"
-
-    info = requests.get(url)
-    if info.status_code != 200:
-        logger.error(f"Erro ao acessar URL: {info.status_code}")
-        return None, None
-    informacao = info.json()
-    
-    species_url = informacao['species']['url']
-    logger.info(f"Buscando dados de espécie: {species_url}")
-    
-    species = requests.get(species_url)
-    if species.status_code != 200:
-        logger.error(f"Erro ao buscar espécie: {species.status_code}")
-        return informacao, None
-
-    return informacao, species.json()
-
-
-def Transform_API(info, esp):
-    if not info or not esp:
-        logger.warning("info ou esp estão nulos.")
-        return None, None, None
-
-    nome = info['name']
-    foto = info['sprites']['front_default']
-
-    for entry in esp['flavor_text_entries']:
-        descricao = entry['flavor_text'].replace('\n', ' ').replace('\f', ' ')
-
-    logger.info(f"Transform_API concluída para: {nome}")
-    return nome, foto, descricao
-
 # criar uma recompensa 
-def criar_recom(result, db: Session, idhist: int):
-    logger.debug(f"Criando recompensa para hist: {idhist}, usuário: {result.idusuario}")
-
-    total_pontos = result.total_pontos or 0
-    if total_pontos == 0:
-        logger.warning(f"Usuário {result.idusuario} não possui pontos, não terá recompensa.")
-        return None
-
-    info, esp = Extract_API(total_pontos)
-    if not info or not esp:
-        logger.error("Falha ao buscar dados da API")
-        return None
-
-    nome, foto, descricao = Transform_API(info, esp)
-
-    nova_recompensa = Recompensa(
-        idhist=idhist,
-        nome=nome,
-        descricao=descricao,
-        imagem_url=foto,
-        pontos=total_pontos
-    )
-
-    db.add(nova_recompensa)
-    db.commit()
-    db.refresh(nova_recompensa)
-    logger.info(f"Recompensa criada para histórico {idhist}")
-    return nova_recompensa
+def criar_recom(pontos, db: Session, idhist: int):
+    logger.info(f"Realizando etapa de extração na recompensa de idhist {id}")
+    info, especie = ETL.Extract_API(pontos)
+    logger.info(f"Realizando etapa de transformação ne recompensa de idhist {id}")
+    nome, foto, descricao = ETL.Transform_API(info, especie)
+    new_result = Recompensa(
+            idhist=idhist,
+            nome=nome,
+            descricao=descricao,
+            imagem_url=foto,
+            pontos=pontos
+        )
+    logger.info(f"Realizando etapa de carregamento na recompensa de idhist {id}")
+    ETL.Load_API(new_result, db)
 
 # GET - Buscar recompensa
 @app.get("/recom/", status_code=status.HTTP_200_OK)
