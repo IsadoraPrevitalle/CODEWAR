@@ -4,7 +4,7 @@ from fastapi.exceptions import RequestValidationError
 from starlette.status import HTTP_400_BAD_REQUEST
 from fastapi.encoders import jsonable_encoder
 import schemas
-from database import SessionLocal, engine, Base
+from database import get_db, engine, Base
 from config_log import logger
 from models import Usuario, Tarefa, Historico, Recompensa
 import ETL
@@ -18,15 +18,6 @@ from sqlalchemy import func
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
-
-def get_db():
-    db = SessionLocal()
-    try:
-        logger.info("A sessão com o banco de dados foi inicializada com suceso")
-        yield db
-    finally:
-        logger.info('A sessão com o banco de dados foi finalizada com sucesso')
-        db.close()
 
 @app.exception_handler(RequestValidationError)
 def validation_exception_handler(request: Request, exc: RequestValidationError):
