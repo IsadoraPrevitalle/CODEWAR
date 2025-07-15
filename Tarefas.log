@@ -7891,3 +7891,87 @@
 2025-07-15 19:14:57,079 - DEBUG - STREAM b'tEXt' 41 57
 2025-07-15 19:14:57,079 - DEBUG - STREAM b'pHYs' 110 9
 2025-07-15 19:14:57,079 - DEBUG - STREAM b'IDAT' 131 28826
+2025-07-15 19:19:26,217 - DEBUG - Starting new HTTP connection (1): localhost:8000
+2025-07-15 19:19:28,370 - INFO - A sessão com o banco de dados foi inicializada com suceso
+2025-07-15 19:19:28,386 - DEBUG - Atualizando tarefa 2 com novos dados: {'titulo': 'Olimpíada de matemática - Fase 1'}
+2025-07-15 19:19:28,447 - INFO - Tarefa 2 atualizada com sucesso
+2025-07-15 19:19:28,451 - INFO - A sessão com o banco de dados foi finalizada com sucesso
+2025-07-15 19:19:28,455 - DEBUG - http://localhost:8000 "PATCH /task/2 HTTP/1.1" 200 243
+2025-07-15 19:19:40,158 - DEBUG - Starting new HTTP connection (1): localhost:8000
+2025-07-15 19:19:42,201 - INFO - A sessão com o banco de dados foi inicializada com suceso
+2025-07-15 19:19:42,202 - DEBUG - Atualizando tarefa 3 com novos dados: {'titulo': 'Olimpíada de matemática - Fase 2'}
+2025-07-15 19:19:42,223 - INFO - Tarefa 3 atualizada com sucesso
+2025-07-15 19:19:42,224 - INFO - A sessão com o banco de dados foi finalizada com sucesso
+2025-07-15 19:19:42,226 - DEBUG - http://localhost:8000 "PATCH /task/3 HTTP/1.1" 200 227
+2025-07-15 19:20:03,926 - DEBUG - Starting new HTTP connection (1): localhost:8000
+2025-07-15 19:20:05,977 - INFO - A sessão com o banco de dados foi inicializada com suceso
+2025-07-15 19:20:05,978 - DEBUG - Atualizando tarefa 5 com novos dados: {'titulo': 'Apache AirFlow - Curso básico'}
+2025-07-15 19:20:05,993 - INFO - Tarefa 5 atualizada com sucesso
+2025-07-15 19:20:05,994 - INFO - A sessão com o banco de dados foi finalizada com sucesso
+2025-07-15 19:20:05,995 - DEBUG - http://localhost:8000 "PATCH /task/5 HTTP/1.1" 200 231
+2025-07-15 19:20:13,068 - DEBUG - Starting new HTTP connection (1): localhost:8000
+2025-07-15 19:20:15,108 - INFO - A sessão com o banco de dados foi inicializada com suceso
+2025-07-15 19:20:15,112 - DEBUG - Atualizando tarefa 6 com novos dados: {'titulo': 'Apache AirFlow - Curso avançado'}
+2025-07-15 19:20:15,159 - INFO - Tarefa 6 atualizada com sucesso
+2025-07-15 19:20:15,161 - INFO - A sessão com o banco de dados foi finalizada com sucesso
+2025-07-15 19:20:15,165 - DEBUG - http://localhost:8000 "PATCH /task/6 HTTP/1.1" 200 235
+2025-07-15 19:20:20,183 - INFO - A sessão com o banco de dados foi inicializada com suceso
+2025-07-15 19:20:20,185 - INFO - A sessão com o banco de dados foi finalizada com sucesso
+2025-07-15 19:20:20,632 - DEBUG - STREAM b'IHDR' 16 13
+2025-07-15 19:20:20,632 - DEBUG - STREAM b'tEXt' 41 57
+2025-07-15 19:20:20,632 - DEBUG - STREAM b'pHYs' 110 9
+2025-07-15 19:20:20,632 - DEBUG - STREAM b'IDAT' 131 36390
+2025-07-15 19:20:21,007 - DEBUG - STREAM b'IHDR' 16 13
+2025-07-15 19:20:21,007 - DEBUG - STREAM b'tEXt' 41 57
+2025-07-15 19:20:21,007 - DEBUG - STREAM b'pHYs' 110 9
+2025-07-15 19:20:21,008 - DEBUG - STREAM b'IDAT' 131 39488
+2025-07-15 19:20:21,460 - DEBUG - STREAM b'IHDR' 16 13
+2025-07-15 19:20:21,460 - DEBUG - STREAM b'tEXt' 41 57
+2025-07-15 19:20:21,460 - DEBUG - STREAM b'pHYs' 110 9
+2025-07-15 19:20:21,460 - DEBUG - STREAM b'IDAT' 131 36752
+2025-07-15 19:20:21,930 - DEBUG - STREAM b'IHDR' 16 13
+2025-07-15 19:20:21,930 - DEBUG - STREAM b'tEXt' 41 57
+2025-07-15 19:20:21,930 - DEBUG - STREAM b'pHYs' 110 9
+2025-07-15 19:20:21,930 - DEBUG - STREAM b'IDAT' 131 33685
+2025-07-15 19:20:23,646 - INFO - A sessão com o banco de dados foi inicializada com suceso
+2025-07-15 19:20:23,647 - INFO - A sessão com o banco de dados foi finalizada com sucesso
+2025-07-15 19:20:24,360 - DEBUG - STREAM b'IHDR' 16 13
+2025-07-15 19:20:24,360 - DEBUG - STREAM b'tEXt' 41 57
+2025-07-15 19:20:24,361 - DEBUG - STREAM b'pHYs' 110 9
+2025-07-15 19:20:24,361 - DEBUG - STREAM b'IDAT' 131 36390
+2025-07-15 19:20:24,828 - DEBUG - STREAM b'IHDR' 16 13
+2025-07-15 19:20:24,828 - DEBUG - STREAM b'tEXt' 41 57
+2025-07-15 19:20:24,828 - DEBUG - STREAM b'pHYs' 110 9
+2025-07-15 19:20:24,829 - DEBUG - STREAM b'IDAT' 131 39488
+2025-07-15 19:20:25,266 - DEBUG - STREAM b'IHDR' 16 13
+2025-07-15 19:20:25,266 - DEBUG - STREAM b'tEXt' 41 57
+2025-07-15 19:20:25,266 - DEBUG - STREAM b'pHYs' 110 9
+2025-07-15 19:20:25,266 - DEBUG - STREAM b'IDAT' 131 36752
+2025-07-15 19:20:25,711 - DEBUG - STREAM b'IHDR' 16 13
+2025-07-15 19:20:25,711 - DEBUG - STREAM b'tEXt' 41 57
+2025-07-15 19:20:25,711 - DEBUG - STREAM b'pHYs' 110 9
+2025-07-15 19:20:25,712 - DEBUG - STREAM b'IDAT' 131 33685
+2025-07-15 19:23:09,594 - DEBUG - Starting new HTTP connection (1): localhost:8000
+2025-07-15 19:23:11,649 - INFO - A sessão com o banco de dados foi inicializada com suceso
+2025-07-15 19:23:11,654 - DEBUG - Realizando a busca de todas as tarefas
+2025-07-15 19:23:11,657 - INFO - 8 tarefas encontradas com sucesso
+2025-07-15 19:23:11,658 - INFO - A sessão com o banco de dados foi finalizada com sucesso
+2025-07-15 19:23:11,659 - DEBUG - http://localhost:8000 "GET /task/ HTTP/1.1" 200 1716
+2025-07-15 19:23:20,569 - INFO - A sessão com o banco de dados foi inicializada com suceso
+2025-07-15 19:23:20,569 - INFO - A sessão com o banco de dados foi finalizada com sucesso
+2025-07-15 19:23:21,055 - DEBUG - STREAM b'IHDR' 16 13
+2025-07-15 19:23:21,056 - DEBUG - STREAM b'tEXt' 41 57
+2025-07-15 19:23:21,056 - DEBUG - STREAM b'pHYs' 110 9
+2025-07-15 19:23:21,056 - DEBUG - STREAM b'IDAT' 131 36390
+2025-07-15 19:23:21,469 - DEBUG - STREAM b'IHDR' 16 13
+2025-07-15 19:23:21,470 - DEBUG - STREAM b'tEXt' 41 57
+2025-07-15 19:23:21,470 - DEBUG - STREAM b'pHYs' 110 9
+2025-07-15 19:23:21,470 - DEBUG - STREAM b'IDAT' 131 39488
+2025-07-15 19:23:21,904 - DEBUG - STREAM b'IHDR' 16 13
+2025-07-15 19:23:21,904 - DEBUG - STREAM b'tEXt' 41 57
+2025-07-15 19:23:21,904 - DEBUG - STREAM b'pHYs' 110 9
+2025-07-15 19:23:21,905 - DEBUG - STREAM b'IDAT' 131 36752
+2025-07-15 19:23:22,442 - DEBUG - STREAM b'IHDR' 16 13
+2025-07-15 19:23:22,442 - DEBUG - STREAM b'tEXt' 41 57
+2025-07-15 19:23:22,443 - DEBUG - STREAM b'pHYs' 110 9
+2025-07-15 19:23:22,443 - DEBUG - STREAM b'IDAT' 131 33685
