@@ -5,6 +5,8 @@ from models import Usuario, Historico, Tarefa, Recompensa
 from sqlalchemy import select, func
 from database import get_db
 import requests
+import re
+from collections import defaultdict
 
 st.set_page_config(page_title="Dash Tarefas", layout="wide")
 
@@ -58,6 +60,22 @@ def carregar_dados(session):
     t_pontos = get_pts_user(session)
     tarefa = get_task(session)
     return t_finalizada, t_total, t_pontos, tarefa
+
+def load_log(path="Tarefas.log"):
+    pattern = re.compile(r"^(\d{4}-\d{2}-\d{2} \d{2}):\d{2}:\d{2},\d+\s-\s(\w+)")
+    counts = defaultdict(lambda: {"INFO": 0, "DEBUG": 0, "WARNING": 0, "ERROR": 0})
+
+    with open(path, "r", encoding="latin-1") as f:
+        for line in f:
+            m = pattern.match(line)
+            if m:
+                hour, level = m.groups()
+                if level in counts[hour]:
+                    counts[hour][level] += 1
+
+    df = pd.DataFrame.from_dict(counts, orient="index").sort_index()
+    df.index.name = "datetime_hour"
+    return df
 
 def Dash():
 
@@ -177,6 +195,36 @@ def Dash():
         st.write("")
         st.write("")
         st.image("https://i.gifer.com/BRyx.gif", width=250)
+
+    df = load_log("Tarefas.log")
+    
+    fig, ax = plt.subplots(figsize=(18, 5))
+
+    colors = {"DEBUG": "#FF00D0", "INFO": "#2374B3", "WARNING": "#00FFB3", "ERROR": "#FF0202"}
+
+    df.plot(kind="bar", stacked=True, ax=ax, color=colors)
+
+    fig.patch.set_facecolor("#0e1117")
+    ax.set_facecolor("#0e1117")
+
+    ax.set_title("Log's - API tarefas", color="white", fontsize=13)
+    ax.set_ylabel("Quantidade", color="white")
+    ax.set_xlabel("Data Hora", color="white")
+    ax.tick_params(axis="x", rotation = 0, colors="white")
+    ax.tick_params(axis="y", colors="white")
+
+    ax.legend(
+    title_fontsize=10,
+    fontsize=10,
+    loc='center left',
+    bbox_to_anchor=(1.0, 0.9),  # fora da área do gráfico (à direita)
+    labelcolor="white",
+    facecolor="#0e1117",
+    edgecolor="#0e1117"
+    )
+
+    plt.tight_layout()
+    st.pyplot(fig)
 
 def buscar(tabela, tipo, id):
     base_url = "http://localhost:8000/"
@@ -326,6 +374,20 @@ def API():
             else:
                 st.warning("Informe um ID para deletar.")
 
+st.markdown(
+    """
+    <style>
+    [data-testid="stSidebar"] {
+        background-image: url('https://i.pinimg.com/736x/cc/b7/db/ccb7db29ba65e1db24c4c7df558338a3.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        color: white;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 pagina = st.sidebar.selectbox("Menu:", ["Gráficos e relatórios de Tarefas", "API de Tarefas"])
 
 if pagina == "Gráficos e relatórios de Tarefas":
