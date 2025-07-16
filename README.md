@@ -71,10 +71,14 @@ A fim de gravar e validar o comportamento da API, foi implementado um sistema de
 | `ERROR`      | Falhas que impedem alguma operação                                            |
 | `CRITICAL`   | Erros graves que comprometem a aplicação como um todo                         |
 
-### ✍️ Contribuição
+### 📈 Gráficos e Relatórios
 
-Esse projeto é colaborativo entre membros do grupo, e está em constante evolução. Futuras etapas devem incluir:
+Foi implementado um dashboard interativo utilizando Streamlit que apresenta os principais gráficos de desempenho das tarefas e usuários, incluindo:
 
-* Testes e Log's
-* ETL com outras API's
-* Dashboard e relatórios análiticos 
+* Quantidade total de tarefas por usuário
+* Número de tarefas finalizadas por usuário
+* Pontuação total de cada usuário
+* Quantidade por tipos de recompensas (Pokémons)
+* Quantidade e tipos de Logs por data
+
+Além do dashboard, também é possível gerar relatórios em formato PDF contendo os log's detalhados da API com níveis variados (INFO, DEBUG, WARNING, ERROR)

@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+sqlalchemy
+requests
+dicttoxml
+pydantic
+starlette
+streamlit
+pandas
+matplotlib
+Pillow
+numpy
+fpdf

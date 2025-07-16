@@ -11,6 +11,7 @@ from matplotlib.offsetbox import OffsetImage, AnnotationBbox
 from PIL import Image
 import urllib.request
 import numpy as np
+from fpdf import FPDF
 
 st.set_page_config(page_title="Dash Tarefas", layout="wide")
 
@@ -25,6 +26,27 @@ st.markdown("""
         }
     </style>
 """, unsafe_allow_html=True)
+
+def read_log(caminho="Tarefas.log"):
+    with open(caminho, "r", encoding="latin-1") as f:
+        text = f.readlines()
+    return text
+
+def pdf_log(text):
+    pdf = FPDF()
+    pdf.add_page()
+    pdf.set_font("Arial", 'B', 16)
+    pdf.set_text_color(0, 0, 128)
+    pdf.cell(0, 10, "Relatório dos Logs da API", ln=True, align='C')
+    pdf.ln(10)
+
+    pdf.set_font("Arial", size=12)
+    pdf.set_text_color(0, 0, 0)
+
+    for t in text:
+        pdf.multi_cell(0, 8, t.strip())
+
+    return pdf.output(dest='S').encode('latin1')
 
 def load_log(path="Tarefas.log"):
     pattern = re.compile(r"^(\d{4}-\d{2}-\d{2} \d{2}):\d{2}:\d{2},\d+\s-\s(\w+)")
@@ -277,7 +299,7 @@ def Dash():
     with col3_2:
         st.markdown("<br>", unsafe_allow_html=True)
         st.image("https://i.gifer.com/BRyx.gif", width=250)
-    
+
 def buscar(tabela, tipo, id):
     base_url = "http://localhost:8000/"
     if id == '':
@@ -425,6 +447,17 @@ def API():
                 deletar(tabela, id)
             else:
                 st.warning("Informe um ID para deletar.")
+
+    texto = read_log("Tarefas.log")
+
+    pdf_bytes = pdf_log(texto)
+
+    st.download_button(
+        label="Baixar Relatório de Logs",
+        data=pdf_bytes,
+        file_name="relatorio_logs_api.pdf",
+        mime="application/pdf"
+    )
 
 st.markdown(
     """

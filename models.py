@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, DateTime, Boolean, ForeignKey
-from database import Base
 from datetime import datetime, timezone
+from database import Base
 
 class Recompensa(Base):
     __tablename__ = "recompensa"
