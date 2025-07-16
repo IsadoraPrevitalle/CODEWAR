@@ -7,8 +7,55 @@ from database import get_db
 import requests
 import re
 from collections import defaultdict
+from matplotlib.offsetbox import OffsetImage, AnnotationBbox
+from PIL import Image
+import urllib.request
+import numpy as np
 
 st.set_page_config(page_title="Dash Tarefas", layout="wide")
+
+st.markdown("""
+    <style>
+        .main {
+            background-color: #0e1117;
+            color: #F7F5F5;
+        }
+        header, .css-18e3th9, .css-1d391kg {
+            background-color: #0e1117;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
+def load_log(path="Tarefas.log"):
+    pattern = re.compile(r"^(\d{4}-\d{2}-\d{2} \d{2}):\d{2}:\d{2},\d+\s-\s(\w+)")
+    counts = defaultdict(lambda: {"INFO": 0, "DEBUG": 0, "WARNING": 0, "ERROR": 0})
+
+    with open(path, "r", encoding="latin-1") as f:
+        for line in f:
+            m = pattern.match(line)
+            if m:
+                hour, level = m.groups()
+                if level in counts[hour]:
+                    counts[hour][level] += 1
+
+    df = pd.DataFrame.from_dict(counts, orient="index").sort_index()
+    df.index.name = "datetime_hour"
+    return df
+
+def img_fundo(img_url, cor=(14, 17, 23)):
+    with urllib.request.urlopen(img_url) as response:
+        img = Image.open(response).convert("RGBA")
+        fundo = Image.new("RGBA", img.size, cor + (255,))
+        img = Image.alpha_composite(fundo, img)
+        return np.array(img.convert("RGB"))
+        
+def get_recom(session):
+    stmt = select(
+            func.lower(Recompensa.nome).label("pokemon"),
+            Recompensa.imagem_url.label("img"),
+            func.count(Recompensa.idrecom).label("qtd")
+        ).group_by(func.lower(Recompensa.nome))
+    return pd.read_sql(stmt, session.bind)
 
 def get_task(session):
     stmt = select(
@@ -59,28 +106,13 @@ def carregar_dados(session):
     t_total = get_ttl_task_user(session)
     t_pontos = get_pts_user(session)
     tarefa = get_task(session)
-    return t_finalizada, t_total, t_pontos, tarefa
-
-def load_log(path="Tarefas.log"):
-    pattern = re.compile(r"^(\d{4}-\d{2}-\d{2} \d{2}):\d{2}:\d{2},\d+\s-\s(\w+)")
-    counts = defaultdict(lambda: {"INFO": 0, "DEBUG": 0, "WARNING": 0, "ERROR": 0})
-
-    with open(path, "r", encoding="latin-1") as f:
-        for line in f:
-            m = pattern.match(line)
-            if m:
-                hour, level = m.groups()
-                if level in counts[hour]:
-                    counts[hour][level] += 1
-
-    df = pd.DataFrame.from_dict(counts, orient="index").sort_index()
-    df.index.name = "datetime_hour"
-    return df
+    pokemon = get_recom(session)
+    return t_finalizada, t_total, t_pontos, tarefa, pokemon
 
 def Dash():
 
     with next(get_db()) as session:
-        hist_final, hist_total, pontos, task = carregar_dados(session)
+        hist_final, hist_total, pontos, task, pok = carregar_dados(session)
 
     col1, col2 = st.columns([1, 10])
     with col1:
@@ -122,34 +154,86 @@ def Dash():
         st.pyplot(fig)
 
     with col2:
-        fig2, ax2 = plt.subplots(figsize=(8, 4))
-        ax2.barh(hist_final["user"], hist_final["finalizadas"], color="#2374B3")
-        ax2.set_xlabel("Quantidade de Tarefas Finalizadas")
-        fig2.patch.set_facecolor("#0e1117")
-        ax2.set_facecolor("#0e1117")
+        fig, ax = plt.subplots(figsize=(8, 4))
+        ax.barh(hist_final["user"], hist_final["finalizadas"], color="#2374B3")
+        ax.set_xlabel("Quantidade de Tarefas Finalizadas")
+        fig.patch.set_facecolor("#0e1117")
+        ax.set_facecolor("#0e1117")
 
-        ax2.set_title("Tarefas Finalizadas por Usuário", color="#F8FDFD", fontsize=16)
-        ax2.set_xlabel("tarefas", color="#F7F5F5", fontsize=12)
-        ax2.set_ylabel("usuários", color="#F7F5F5", fontsize=12)
-        ax2.tick_params(axis='x', colors='#F7F5F5')
-        ax2.tick_params(axis='y', colors='#F7F5F5')
+        ax.set_title("Tarefas Finalizadas por Usuário", color="#F8FDFD", fontsize=16)
+        ax.set_xlabel("tarefas", color="#F7F5F5", fontsize=12)
+        ax.set_ylabel("usuários", color="#F7F5F5", fontsize=12)
+        ax.tick_params(axis='x', colors='#F7F5F5')
+        ax.tick_params(axis='y', colors='#F7F5F5')
 
-        st.pyplot(fig2)
+        st.pyplot(fig)
 
     with col3:
-        fig3, ax3 = plt.subplots(figsize=(8, 4))
-        ax3.bar(pontos["user"], pontos["pontos"], color="#E710BC")
-        ax3.set_xlabel("Pontuação por usuário")
-        fig3.patch.set_facecolor("#0e1117")
-        ax3.set_facecolor("#0e1117")
+        fig, ax = plt.subplots(figsize=(8, 4))
+        ax.bar(pontos["user"], pontos["pontos"], color="#E710BC")
+        ax.set_xlabel("Pontuação por usuário")
+        fig.patch.set_facecolor("#0e1117")
+        ax.set_facecolor("#0e1117")
 
-        ax3.set_title("Pontuação por Usuário", color="#F7F5F5", fontsize=16)
-        ax3.set_ylabel("pontos", color="#F7F5F5", fontsize=12)
-        ax3.set_xlabel("usuários", color="#F7F5F5", fontsize=12)
-        ax3.tick_params(axis='x', colors='#F7F5F5')
-        ax3.tick_params(axis='y', colors='#F7F5F5')
+        ax.set_title("Pontuação por Usuário", color="#F7F5F5", fontsize=16)
+        ax.set_ylabel("pontos", color="#F7F5F5", fontsize=12)
+        ax.set_xlabel("usuários", color="#F7F5F5", fontsize=12)
+        ax.tick_params(axis='x', colors='#F7F5F5')
+        ax.tick_params(axis='y', colors='#F7F5F5')
 
-        st.pyplot(fig3)
+        st.pyplot(fig)
+
+    st.markdown("<br><br>", unsafe_allow_html=True)
+
+    fig, ax = plt.subplots(figsize=(20, 5))
+    bars = ax.bar(pok['pokemon'], pok['qtd'], color="#3E4DF5")
+
+    fig.patch.set_facecolor("#0e1117")
+    ax.set_facecolor("#0e1117")
+    ax.set_title("Quantidade de Pokémons", color="white", fontsize=13)
+    ax.set_ylabel("Quantidade", color="white")
+    ax.set_xlabel("Pokémon", color="white")
+    ax.tick_params(axis='x', colors='white')
+    ax.tick_params(axis='y', colors='white')
+
+    for bar, img_url in zip(bars, pok['img']):
+        altura = bar.get_height()
+        x = bar.get_x() + bar.get_width() / 2
+        img_np = img_fundo(img_url)
+        imagebox = OffsetImage(img_np, zoom=0.6)
+        ab = AnnotationBbox(imagebox, (x, altura + 0.5), frameon=False)
+        ax.add_artist(ab)
+
+    y_max = max(pok['qtd']) + 1
+    ax.set_ylim(0, y_max)
+    st.pyplot(fig)
+
+    st.markdown("<br>", unsafe_allow_html=True)
+    
+    df = load_log("Tarefas.log")
+    fig, ax = plt.subplots(figsize=(18, 5))
+    colors = {"DEBUG": "#FF00D0", "INFO": "#2374B3", "WARNING": "#00FFB3", "ERROR": "#FF0202"}
+    df.plot(kind="line", ax=ax, color=colors)
+    fig.patch.set_facecolor("#0e1117")
+    ax.set_facecolor("#0e1117")
+
+    ax.set_title("Log's - API tarefas", color="white", fontsize=13)
+    ax.set_ylabel("Quantidade", color="white")
+    ax.set_xlabel("Data", color="white")
+    ax.tick_params(axis="x", rotation=0, colors="white")
+    ax.tick_params(axis="y", colors="white")
+
+    ax.legend(
+        title_fontsize=10,
+        fontsize=10,
+        loc='upper right',
+        labelcolor="white",
+        facecolor="#0e1117",
+        edgecolor="#0e1117"
+    )
+
+    plt.tight_layout()
+    st.pyplot(fig)
 
     st.markdown("<br><br>", unsafe_allow_html=True)
 
@@ -158,11 +242,11 @@ def Dash():
     col1_2, col2_2, col3_2 = st.columns([2, 0.3, 1])
 
     with col1_2:
-        fig4, ax4 = plt.subplots(figsize=(2, 2))
+        fig, ax = plt.subplots(figsize=(2, 2))
 
-        ax4.set_title("Pontos por tarefa", color="#F8FDFD", fontsize=4)
+        ax.set_title("Pontos por tarefa", color="#F8FDFD", fontsize=4)
 
-        wedges, texts, autotexts = ax4.pie(
+        wedges, texts, autotexts = ax.pie(
             task['pontos'],
             autopct='%1.1f%%',
             startangle=140,
@@ -172,7 +256,7 @@ def Dash():
             labels=None
         )
 
-        ax4.legend(
+        ax.legend(
             wedges,
             task['titulo'],
             loc="center left",
@@ -182,50 +266,18 @@ def Dash():
             labelcolor='white'
         )
 
-        fig4.patch.set_facecolor('#0e1117')
-        ax4.set_facecolor('#0e1117')
+        fig.patch.set_facecolor('#0e1117')
+        ax.set_facecolor('#0e1117')
 
-        st.pyplot(fig4)
+        st.pyplot(fig)
 
     with col2_2:
-        st.write("")
+        st.markdown("<br><br><br>", unsafe_allow_html=True)
 
     with col3_2:
-        st.write("")
-        st.write("")
-        st.write("")
+        st.markdown("<br>", unsafe_allow_html=True)
         st.image("https://i.gifer.com/BRyx.gif", width=250)
-
-    df = load_log("Tarefas.log")
     
-    fig, ax = plt.subplots(figsize=(18, 5))
-
-    colors = {"DEBUG": "#FF00D0", "INFO": "#2374B3", "WARNING": "#00FFB3", "ERROR": "#FF0202"}
-
-    df.plot(kind="bar", stacked=True, ax=ax, color=colors)
-
-    fig.patch.set_facecolor("#0e1117")
-    ax.set_facecolor("#0e1117")
-
-    ax.set_title("Log's - API tarefas", color="white", fontsize=13)
-    ax.set_ylabel("Quantidade", color="white")
-    ax.set_xlabel("Data Hora", color="white")
-    ax.tick_params(axis="x", rotation = 0, colors="white")
-    ax.tick_params(axis="y", colors="white")
-
-    ax.legend(
-    title_fontsize=10,
-    fontsize=10,
-    loc='center left',
-    bbox_to_anchor=(1.0, 0.9),  # fora da área do gráfico (à direita)
-    labelcolor="white",
-    facecolor="#0e1117",
-    edgecolor="#0e1117"
-    )
-
-    plt.tight_layout()
-    st.pyplot(fig)
-
 def buscar(tabela, tipo, id):
     base_url = "http://localhost:8000/"
     if id == '':
@@ -378,7 +430,7 @@ st.markdown(
     """
     <style>
     [data-testid="stSidebar"] {
-        background-image: url('https://i.pinimg.com/736x/cc/b7/db/ccb7db29ba65e1db24c4c7df558338a3.jpg');
+        background-image: url('https://i.pinimg.com/1200x/cd/70/88/cd70884f895b6addd44a56870a4569d4.jpg');
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
