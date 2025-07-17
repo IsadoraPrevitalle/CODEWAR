@@ -17,7 +17,7 @@ def Buscar(tabela, tipo, id):
     if tipo == 'json':
         print(json.dumps(response.json(), indent= 4, ensure_ascii=False))
     else:
-        print(response.text) #melhoria - formatar
+        print(response.text)
 
 def Criar(tabela):
     new_url = f'{url}{tabela}/'

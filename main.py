@@ -14,6 +14,7 @@ from typing import Optional
 from datetime import datetime
 import requests
 from sqlalchemy import func
+from typing import List
 
 Base.metadata.create_all(bind=engine)
 
@@ -48,7 +49,7 @@ def root():
                 } 
 
 #-------------------------------------------------------------- TAREFA ------------------------------------------------------
-# POST - Adicionar uma Tarefa
+# POST - Adiciona uma Tarefa
 @app.post("/task/", status_code=status.HTTP_201_CREATED)
 def criar_tarefa(tarefa: schemas.TaskCreate, db: Session = Depends(get_db)):
     logger.debug(f"Dados para nova tarefa foram recebidos com sucesso: {tarefa.dict()}")
@@ -63,9 +64,7 @@ def criar_tarefa(tarefa: schemas.TaskCreate, db: Session = Depends(get_db)):
         logger.error(f"Erro ao criar tarefa: {str(e)}")
         raise HTTPException(status_code=400, detail=f"Erro ao criar tarefa: {str(e)}")
     
-# GET - Buscar uma tarefa (Opcional ser por ID)    
-from typing import List
-
+# GET - Busca uma tarefa (Opcional ser por ID)    
 @app.get("/task/", status_code=status.HTTP_200_OK)
 def buscar_tarefa(request: Request, id: Optional[int] = Query(default=None), db: Session = Depends(get_db)):
     busca_tarefa = db.query(Tarefa).all()
@@ -121,9 +120,8 @@ def atualizar_tarefa(id: int, tarefa_update: schemas.TaskUpdate = Body(...), db:
     return format_response(task_dict, request)
 
 #-------------------------------------------------------------- USUÁRIO ------------------------------------------------------                                             
-    
 
-# POST - Adicionar um usuário
+# POST - Adiciona um usuário
 @app.post("/user/", status_code=status.HTTP_201_CREATED)
 def criar_usuario(usuario: schemas.UserCreate, db: Session = Depends(get_db)):
     logger.debug(f"Dados para novo usário foram recebidos com sucesso: {usuario.dict()}")
@@ -139,7 +137,7 @@ def criar_usuario(usuario: schemas.UserCreate, db: Session = Depends(get_db)):
         logger.error(f"Erro ao criar usuário: {str(e)}")
         raise HTTPException(status_code=400, detail=f"Erro ao cadastrar usuário: {str(e)}")
     
-# GET - Buscar um usuário (Opcional ser por ID)    
+# GET - Busca um usuário (Opcional ser por ID)    
 @app.get("/user/", status_code=status.HTTP_200_OK)
 def buscar_usuario(request: Request, id: Optional[int] = Query(default=None), db: Session = Depends(get_db)):
     if id is not None:
@@ -196,8 +194,7 @@ def atualizar_usuario(id: int, usuario_update: schemas.UserUpdate = Body(...), d
 
 #-------------------------------------------------------------- HISTÓRICO ------------------------------------------------------
 
-
-# POST - Adicionar um histórico
+# POST - Adiciona um histórico
 @app.post("/hist/", status_code=status.HTTP_201_CREATED)
 def criar_historico(historico: schemas.HistCreate, db: Session = Depends(get_db)):
     logger.debug(f"Dados para novo histórico foram recebidos com sucesso: {historico.dict()}")
@@ -249,7 +246,7 @@ def criar_historico(historico: schemas.HistCreate, db: Session = Depends(get_db)
         logger.error(f"Erro ao criar histórico: {str(e)}")
         raise HTTPException(status_code=400, detail=f"Erro ao cadastrar histórico: {str(e)}")
     
-# GET - Buscar um histórico (Opcional ser por ID)    
+# GET - Busca um histórico (Opcional ser por ID)    
 @app.get("/hist/", status_code=status.HTTP_200_OK)
 def buscar_historico(request: Request, id: Optional[int] = Query(default=None), db: Session = Depends(get_db)):
     if id is not None:
@@ -324,7 +321,7 @@ def atualizar_historico(id: int, historico_update: schemas.HistUpdate = Body(...
 
 #-------------------------------------------------------------- API ------------------------------------------------------
 
-# criar uma recompensa 
+# cria uma recompensa 
 def criar_recom(pontos, db: Session, idhist: int):
     logger.info(f"Realizando etapa de extração na recompensa de idhist {id}")
     info, especie = ETL.Extract_API(pontos)
@@ -340,7 +337,7 @@ def criar_recom(pontos, db: Session, idhist: int):
     logger.info(f"Realizando etapa de carregamento na recompensa de idhist {id}")
     ETL.Load_API(new_result, db)
 
-# GET - Buscar recompensa
+# GET - Busca recompensa
 @app.get("/recom/", status_code=status.HTTP_200_OK)
 def buscar_recom(request: Request, id: Optional[int] = None, db: Session = Depends(get_db)):
     if id is not None:
