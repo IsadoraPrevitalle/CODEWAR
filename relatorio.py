@@ -319,7 +319,7 @@ def buscar(tabela, tipo, id):
         return response.text
 
 def criar(tabela, dados):
-    base_url = "http://localhost:8000/"
+    base_url = "https://codewar-apitask.onrender.com/"
     new_url = f'{base_url}{tabela}/'
     response = requests.post(new_url, json=dados)
     if response.status_code in (200, 201):
@@ -331,7 +331,7 @@ def criar(tabela, dados):
         return None
 
 def atualizar(tabela, id, dados):
-    base_url = "http://localhost:8000/"
+    base_url = "https://codewar-apitask.onrender.com/"
     new_url = f"{base_url}{tabela}/{id}"
     response = requests.patch(new_url, json=dados)
     if response.status_code == 200:
@@ -343,7 +343,7 @@ def atualizar(tabela, id, dados):
         return None
 
 def deletar(tabela, id):
-    base_url = "http://localhost:8000/"
+    base_url = "https://codewar-apitask.onrender.com/"
     new_url = f"{base_url}{tabela}/{id}"
     response = requests.delete(new_url)
     if response.status_code == 204:
