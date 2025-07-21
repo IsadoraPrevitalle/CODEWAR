@@ -1,7 +1,7 @@
 import requests
 import json
 
-url = "https://codewar-apitask.onrender.com"
+url = "https://codewar-apitask.onrender.com/"
 
 def Buscar(tabela, tipo, id):
     if id == '':
