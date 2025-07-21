@@ -84,4 +84,3 @@ Foi implementado um dashboard interativo utilizando Streamlit que apresenta os p
 Além do dashboard, também é possível gerar relatórios em formato PDF contendo os log's detalhados da API com níveis variados (INFO, DEBUG, WARNING, ERROR)
 
 link do streamlit: https://isapcodewar.streamlit.app/
-ATENÇÃO: Como a API não se encontra em um servidor público a mesma não tem funcionalidade no streamlit, para testa-la basta clonar o repositório e rodar localmente
