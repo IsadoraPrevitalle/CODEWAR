@@ -301,7 +301,7 @@ def Dash():
         st.image("https://i.gifer.com/BRyx.gif", width=250)
 
 def buscar(tabela, tipo, id):
-    base_url = "http://localhost:8000/"
+    base_url = "https://codewar-apitask.onrender.com/"
     if id == '':
         new_url = f'{base_url}{tabela}/'
     else:

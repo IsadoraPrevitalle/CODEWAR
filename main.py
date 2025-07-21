@@ -15,20 +15,10 @@ from datetime import datetime
 import requests
 from sqlalchemy import func
 from typing import List
-from fastapi.middleware.cors import CORSMiddleware
-
 
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["https://isapcodewar.streamlit.app/"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
 @app.exception_handler(RequestValidationError)
 def validation_exception_handler(request: Request, exc: RequestValidationError):
